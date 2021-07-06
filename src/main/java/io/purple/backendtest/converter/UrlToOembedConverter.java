@@ -33,10 +33,14 @@ public class UrlToOembedConverter implements Converter<String, OembedEntity> {
     @Value("${api.oembed.twitter}")
     private String TWITTER_API_URL;
 
+    @Value("${api.oembed.vimeo}")
+    private String VIMEO_API_URL;
+
 
     private final String YOUTUBE = "youtube";
     private final String INSTAGRAM = "instagram";
     private final String TWITTER = "twitter";
+    private final String VIMEO = "vimeo";
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -59,10 +63,24 @@ public class UrlToOembedConverter implements Converter<String, OembedEntity> {
                 return convertInstagramOembed(source);
             case TWITTER:
                 return convertTwitterOembed(source);
+            case VIMEO:
+                return convertVimeoOembed(source);
         }
 
 
         return new OembedEntity();
+    }
+
+    private OembedEntity convertVimeoOembed(String url) {
+        if (!isVimeoUrl(url)) {
+            throw new NotUrlTypeException(messageSource.getMessage("wrong.vimeo.url", new Object[]{url}, null, null));
+        }
+        getOembedResult(url, VIMEO_API_URL);
+        return modelMapper.map(result, OembedEntity.class);
+    }
+
+    private boolean isVimeoUrl(String url) {
+        return url.startsWith("https://vimeo.com");
     }
 
     private OembedEntity convertTwitterOembed(String url) {

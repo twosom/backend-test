@@ -3,6 +3,7 @@ api:
     youtube: "https://www.youtube.com/oembed?url=%s&format=json"
     instagram: "https://api.instagram.com/oembed/?url=%s"
     twitter: "https://publish.twitter.com/oembed?url=%s"
+    vimeo: "https://vimeo.com/api/oembed.json?url=%s"
 
 
 spring:

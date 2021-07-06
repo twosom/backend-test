@@ -27,87 +27,96 @@
             <div class="table-responsive">
                 <table class="table align-items-center">
                     <tbody>
-                    <tr>
+                    <tr th:if="*{title != null}">
                         <th scope="col">title</th>
                         <td class="text-bolder" th:text="*{title}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{type != null}">
                         <th scope="col">type</th>
                         <td th:text="*{type}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{version != null}">
                         <th scope="col">version</th>
                         <td th:text="*{version}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{providerName != null}">
                         <th scope="col">provider_name</th>
                         <td th:text="*{providerName}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{providerUrl != null}">
                         <th scope="col">provider_url</th>
-                        <td th:text="*{providerUrl}"></td>
+                        <td>
+                            <a th:href="*{providerUrl}" th:text="*{providerUrl}"></a>
+                        </td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{authorName != null}">
                         <th scope="col">author_name</th>
                         <td th:text="*{authorName}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{authorUrl != null}">
                         <th scope="col">author_url</th>
-                        <td th:text="*{authorUrl}"></td>
+                        <td>
+                            <a th:href="*{authorUrl}" th:text="*{authorUrl}"></a>
+                        </td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{isPlus != null}">
                         <th scope="col">is_plus</th>
                         <td th:text="*{isPlus}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{html != null}">
                         <th scope="col">html</th>
-                        <td th:utext="*{html}"></td>
+                        <td>
+                            <span th:text="*{html}"></span><br/>
+                            <span th:utext="*{html}"></span>
+                        </td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{width != null}">
                         <th scope="col">width</th>
                         <td th:text="*{width}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{height != null}">
                         <th scope="col">height</th>
                         <td th:text="*{height}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{duration != null}">
                         <th scope="col">duration</th>
                         <td th:text="*{duration}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{description != null}">
                         <th scope="col">description</th>
                         <td th:text="*{description}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{thumbnailUrl != null}">
                         <th scope="col">thumbnail_url</th>
                         <td>
-                            <span th:text="*{thumbnailUrl}"></span><br/>
+                            <a th:href="*{thumbnailUrl}" th:text="*{thumbnailUrl}"></a><br/>
                             <img id="image" th:src="*{thumbnailUrl}"/>
                         </td>
 
                     </tr>
-                    <tr>
+                    <tr th:if="*{thumbnailWidth != null}">
                         <th scope="col">thumbnail_width</th>
                         <td th:text="*{thumbnailWidth}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{thumbnailHeight != null}">
                         <th scope="col">thumbnail_height</th>
                         <td th:text="*{thumbnailHeight}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{thumbnailUrlWithPlayButton != null}">
                         <th scope="col">thumbnail_url_with_play_button</th>
-                        <td th:text="*{thumbnailUrlWithPlayButton}"></td>
+                        <td>
+                            <a th:href="*{thumbnailUrlWithPlayButton}" th:text="*{thumbnailUrlWithPlayButton}"></a>
+                        </td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{uploadDate != null}">
                         <th scope="col">upload_date</th>
                         <td th:text="*{uploadDate}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{videoId != null}">
                         <th scope="col">video_id</th>
                         <td th:text="*{videoId}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="*{uri != null}">
                         <th scope="col">uri</th>
                         <td th:text="*{uri}"></td>
                     </tr>
