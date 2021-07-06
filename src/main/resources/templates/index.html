@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html::head"></head>
+<body>
+<header class="header-2">
+    <div class="page-header min-vh-25 relative bg-info bg-gradient">
+        <div class="container">
+            <h2 class="text-center text-white">oEmbed Test</h2>
+
+            <form action="#" th:action="@{/search}" th:object="${searchForm}" method="get">
+                <div class="input-group mb-3">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="URL을 입력해주세요."
+                               th:field="*{url}" aria-describedby="button-addon2">
+                        <button type="submit" class="btn btn-primary mb-0" id="button-addon2">검색</button>
+                    </div>
+                    <small class="text-danger" th:if="${error != null}" th:text="${error}"></small>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+
+<div class="row justify-content-center" th:if="${result != null}">
+    <div class="col-10">
+        <div class="card">
+            <div class="card-body" th:object="${result}">
+                <table class="table">
+
+                    <thead></thead>
+                    <tbody>
+                    <tr>
+                        <th scope="col">title</th>
+                        <td th:text="*{title}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">type</th>
+                        <td th:text="*{type}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">version</th>
+                        <td th:text="*{version}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">provider_name</th>
+                        <td th:text="*{providerName}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">provider_url</th>
+                        <td th:text="*{providerUrl}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">author_name</th>
+                        <td th:text="*{authorName}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">author_url</th>
+                        <td th:text="*{authorUrl}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">is_plus</th>
+                        <td th:text="*{isPlus}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">html</th>
+                        <td th:utext="*{html}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">width</th>
+                        <td th:text="*{width}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">height</th>
+                        <td th:text="*{height}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">duration</th>
+                        <td th:text="*{duration}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">description</th>
+                        <td th:text="*{description}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">thumbnail_url</th>
+                        <td>
+                            <span th:text="*{thumbnailUrl}"></span><br/>
+                            <img th:src="*{thumbnailUrl}"/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th scope="col">thumbnail_width</th>
+                        <td th:text="*{thumbnailWidth}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">thumbnail_height</th>
+                        <td th:text="*{thumbnailHeight}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">thumbnail_url_with_play_button</th>
+                        <td th:text="*{thumbnailUrlWithPlayButton}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">upload_date</th>
+                        <td th:text="*{uploadDate}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">video_id</th>
+                        <td th:text="*{videoId}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">uri</th>
+                        <td th:text="*{uri}"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:replace="fragments.html::uiScripts"></script>
+</body>
+</html>

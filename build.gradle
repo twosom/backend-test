@@ -25,6 +25,8 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // MODEL MAPPER
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.0'
 }
 
 test {
