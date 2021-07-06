@@ -17,7 +17,11 @@ class OembedControllerTest {
 
     private static final String TEST_YOUTUBE_LINK = "https://www.youtube.com/watch?v=dBD54EZIrZo";
     private static final String TEST_INSTAGRAM_LINK = "https://www.instagram.com/p/BUawPlPF_Rx/";
+    private static final String TEST_TWITTER_LINK = "https://twitter.com/hellopolicy/status/867177144815804416";
     private static final String NOT_URL = "not_url";
+
+
+
     @Autowired
     MockMvc mockMvc;
 
@@ -47,6 +51,16 @@ class OembedControllerTest {
     void oembed_with_instagram_success() throws Exception {
         mockMvc.perform(get("/search")
                 .param("url", TEST_INSTAGRAM_LINK))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("result", "searchForm"))
+                .andExpect(view().name("index"));
+    }
+
+    @DisplayName("트위터 링크 입력 - 성공")
+    @Test
+    void oembed_with_twitter_success() throws Exception {
+        mockMvc.perform(get("/search")
+                .param("url", TEST_TWITTER_LINK))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("result", "searchForm"))
                 .andExpect(view().name("index"));
