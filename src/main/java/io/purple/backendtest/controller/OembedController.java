@@ -34,7 +34,7 @@ public class OembedController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index() {
         return "index";
     }
 
