@@ -3,7 +3,6 @@ package io.purple.backendtest.converter;
 import io.purple.backendtest.domain.OembedEntity;
 import io.purple.backendtest.exception.NotUrlTypeException;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -13,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -24,12 +22,19 @@ public class UrlToOembedConverter implements Converter<String, OembedEntity> {
 
     private final ModelMapper modelMapper;
     private final MessageSource messageSource;
+    private Map<String, Object> result;
 
     @Value("${api.oembed.youtube}")
     private String YOUTUBE_API_URL;
 
+    @Value("${api.oembed.instagram}")
+    private String INSTAGRAM_API_URL;
+
 
     private final String YOUTUBE = "youtube";
+    private final String INSTAGRAM = "instagram";
+
+    private final RestTemplate restTemplate = new RestTemplate();
 
 
     @Override
@@ -46,32 +51,38 @@ public class UrlToOembedConverter implements Converter<String, OembedEntity> {
         switch (domain) {
             case YOUTUBE:
                 return convertYoutubeOembed(source);
-            // TODO 나머지 기능들도 구현
+            case INSTAGRAM:
+                return convertInstagramOembed(source);
         }
 
 
         return new OembedEntity();
     }
 
-    private OembedEntity convertYoutubeOembed(String url) {
-        Map<String, Object> result = new HashMap<>();
-        if (!isYoutubeUrl(url)) {
-            throw new NotUrlTypeException(messageSource.getMessage("wrong.youtube.url", new Object[]{url}, null, null));
+    private OembedEntity convertInstagramOembed(String url) {
+        if (!isInstagramUrl(url)) {
+            throw new NotUrlTypeException(messageSource.getMessage("wrong.instagram.url", new Object[]{url}, null, null));
         }
-
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            result = restTemplate.getForObject(String.format(YOUTUBE_API_URL, url), Map.class);
-        } catch (Exception e) {
-            throw new NotUrlTypeException(messageSource.getMessage("wrong.url", new Object[]{url}, null, null));
-        }
-
+        getOembedResult(url, INSTAGRAM_API_URL);
         return modelMapper.map(result, OembedEntity.class);
     }
 
-    private boolean isYoutubeUrl(String url) {
-        return url.startsWith("https://www.youtube.com/watch?v=");
+    private OembedEntity convertYoutubeOembed(String url) {
+        if (!isYoutubeUrl(url)) {
+            throw new NotUrlTypeException(messageSource.getMessage("wrong.youtube.url", new Object[]{url}, null, null));
+        }
+        getOembedResult(url, YOUTUBE_API_URL);
+        return modelMapper.map(result, OembedEntity.class);
     }
+
+    private void getOembedResult(String url, String instagram_api_url) {
+        try {
+            result = restTemplate.getForObject(String.format(instagram_api_url, url), Map.class);
+        } catch (Exception e) {
+            throw new NotUrlTypeException(messageSource.getMessage("wrong.url", new Object[]{url}, null, null));
+        }
+    }
+
 
     private String getDomain(String url) throws URISyntaxException {
         if (!isUrlFormat(url)) {
@@ -87,7 +98,17 @@ public class UrlToOembedConverter implements Converter<String, OembedEntity> {
         return domain;
     }
 
+    private boolean isYoutubeUrl(String url) {
+        return url.startsWith("https://www.youtube.com/watch?v=");
+    }
+
+    private boolean isInstagramUrl(String url) {
+        return Pattern.compile("(https://www.instagram.com/p/.*?)").matcher(url).find();
+    }
+
     private boolean isUrlFormat(String url) {
         return Pattern.compile("^((http|https)://)?(www.)?([a-zA-Z0-9]+)\\.[a-z]+([a-zA-Z0-9.?#]+)?").matcher(url).find();
     }
+
+
 }
