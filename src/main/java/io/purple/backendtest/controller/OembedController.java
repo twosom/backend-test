@@ -26,7 +26,6 @@ public class OembedController {
 
     @ExceptionHandler(NotUrlTypeException.class)
     public ModelAndView notUrlTypeException(NotUrlTypeException e) {
-        //TODO 예외 처리
         Map<String, Object> model = new HashMap<>();
         model.put("error", e.getMessage());
         model.put("searchForm", new SearchForm());
