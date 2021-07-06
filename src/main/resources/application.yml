@@ -1,1 +1,8 @@
+api:
+  oembed:
+    youtube: "https://www.youtube.com/oembed?url=%s&format=json"
 
+
+spring:
+  messages:
+    basename: messages, errors
