@@ -23,15 +23,13 @@
 
 <div class="row justify-content-center" th:if="${result != null}">
     <div class="col-10">
-        <div class="card">
-            <div class="card-body" th:object="${result}">
-                <table class="table">
-
-                    <thead></thead>
+        <div class="card mt-5 shadow-lg" th:object="${result}">
+            <div class="table-responsive">
+                <table class="table align-items-center">
                     <tbody>
                     <tr>
                         <th scope="col">title</th>
-                        <td th:text="*{title}"></td>
+                        <td class="text-bolder" th:text="*{title}"></td>
                     </tr>
                     <tr>
                         <th scope="col">type</th>
@@ -85,7 +83,7 @@
                         <th scope="col">thumbnail_url</th>
                         <td>
                             <span th:text="*{thumbnailUrl}"></span><br/>
-                            <img th:src="*{thumbnailUrl}"/>
+                            <img id="image" th:src="*{thumbnailUrl}"/>
                         </td>
 
                     </tr>
