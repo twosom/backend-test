@@ -30,9 +30,13 @@ public class UrlToOembedConverter implements Converter<String, OembedEntity> {
     @Value("${api.oembed.instagram}")
     private String INSTAGRAM_API_URL;
 
+    @Value("${api.oembed.twitter}")
+    private String TWITTER_API_URL;
+
 
     private final String YOUTUBE = "youtube";
     private final String INSTAGRAM = "instagram";
+    private final String TWITTER = "twitter";
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -53,10 +57,24 @@ public class UrlToOembedConverter implements Converter<String, OembedEntity> {
                 return convertYoutubeOembed(source);
             case INSTAGRAM:
                 return convertInstagramOembed(source);
+            case TWITTER:
+                return convertTwitterOembed(source);
         }
 
 
         return new OembedEntity();
+    }
+
+    private OembedEntity convertTwitterOembed(String url) {
+        if (!isTwitterUrl(url)) {
+            throw new NotUrlTypeException(messageSource.getMessage("wrong.twitter.url", new Object[]{url}, null, null));
+        }
+        getOembedResult(url, TWITTER_API_URL);
+        return modelMapper.map(result, OembedEntity.class);
+    }
+
+    private boolean isTwitterUrl(String url) {
+        return Pattern.compile("(https://twitter.com/.*/status/.*?)").matcher(url).find();
     }
 
     private OembedEntity convertInstagramOembed(String url) {
